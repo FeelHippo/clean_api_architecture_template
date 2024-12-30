@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Clean Api Architecture
+  description: Template for a Clean API.
+  version: 1.0.0
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api-key
+      in: header
+paths:
+  /v1/get-something/{something_id}:
+    get:
+      operationId: getSomething
+      summary: V1 GET Endpoints
+      tags:
+        - Get
+      parameters:
+        - in: path
+          name: something_id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  something:
+                    type: string
+                required:
+                  - something
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /v1/post-something:
+    post:
+      operationId: postSomething
+      summary: V1 POST Endpoints
+      tags:
+        - Post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                something:
+                  type: string
+              required:
+                - something
+      responses:
+        '201':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
