@@ -11,7 +11,9 @@ We define the following layers:
 - Entity Logic
 - Data
 
-None of the layers have visibility into higher layers. They may have references to their child layer, but definitely not their grandchildren
+None of the layers have visibility into higher layers. They may have references to their child layer, but definitely not their grandchildren.
+
+![Clean Architecture](https://miro.medium.com/v2/resize:fit:700/1*yTDpfIqqAdeKRhbHwfhrYQ.png)
 
 ## Frameworks and Cloud
 
