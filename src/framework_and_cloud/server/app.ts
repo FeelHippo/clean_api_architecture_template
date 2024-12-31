@@ -29,12 +29,13 @@ const createServer = async (): Promise<Express> => {
   app.use(winstonLogger);
 
   await expressOpenApi.initialize({
+    app,
     apiDoc: fs.readFileSync(openApiYml, 'utf8'),
     operations: {
+      // the below must match the "operationId"s from the schema yml
       getSomething: [Authorizer, Validator, SomethingControllers.getController],
       postSomething: [Authorizer, Validator, SomethingControllers.postController],
     },
-    app,
   });
 
   return app;

@@ -43,9 +43,11 @@ export class QueueConsumer {
       if (message.Body) {
         const body = JSON.parse(message.Body);
         assert(body.hasOwnProperty('something'), new FailedConsumerException());
+
         const data: Something = { something: body.something };
         const somethingEntity = new SomethingEntity(data);
         await SomethingControllers.createController(somethingEntity);
+
         log(log_levels.info, log_labels.sqs.consumer_handled, { message });
       }
     } catch (error) {

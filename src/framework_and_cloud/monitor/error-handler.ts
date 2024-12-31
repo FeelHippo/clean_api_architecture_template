@@ -3,12 +3,20 @@ import { log, log_labels, log_levels } from './logger';
 import * as Http from 'http-status-codes';
 
 export enum ErrorCodes {
+  UNAUTHORIZED = 'UNAUTHORIZED',
   CREATE_TOKEN_ERROR = 'CREATE_TOKEN_ERROR',
   INVALID_FORMAT = 'INVALID_FORMAT',
   FAILED_OPERATION = 'FAILED_OPERATION',
   INVALID_PAYLOAD = 'INVALID_PAYLOAD',
   FAILED_PUBLISHER_ERROR = 'FAILED_PUBLISHER_ERROR',
   FAILED_CONSUMER_ERROR = 'FAILED_CONSUMER_ERROR',
+}
+export class UnauthorizedUserException extends Error {
+  constructor() {
+    super();
+    this.name = ErrorCodes.UNAUTHORIZED;
+    this.message = 'Unauthorized User.';
+  }
 }
 
 export class ApiClientException extends Error {
@@ -63,6 +71,8 @@ export function errorHandler(res: Response, error: Error, origin: string): Respo
   log(log_levels.error, log_labels.modules.operation_failed, { error: JSON.stringify(error), origin });
   const error_object = { success: false, error_code: error.name, message: error.message || '' };
   switch (error.constructor) {
+    case UnauthorizedUserException:
+      return res.status(Http.StatusCodes.UNAUTHORIZED).send(error_object);
     case ApiClientException:
     case CreateTokenException:
       return res.status(Http.StatusCodes.INTERNAL_SERVER_ERROR).send(error_object);

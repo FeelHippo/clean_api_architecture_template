@@ -15,6 +15,8 @@ import { SomethingEntity } from '../../../data/something';
 export class SomethingControllers {
   static getController = async (request: RequestWithValidation, response: ResponseWithValidation): Promise<void> => {
     try {
+      response.locals.authenticateUser();
+
       if (request.validateRequest(request)) {
         throw new InvalidFormatException();
       }
@@ -32,6 +34,8 @@ export class SomethingControllers {
   };
   static postController = async (request: RequestWithValidation, response: ResponseWithValidation): Promise<void> => {
     try {
+      response.locals.authenticateUser();
+
       if (request.validateRequest(request)) {
         throw new InvalidFormatException();
       }
@@ -43,7 +47,6 @@ export class SomethingControllers {
       errorHandler(response, err, 'postController');
     }
   };
-  static createController = async (somethingEntity: SomethingEntity): Promise<void> => {
-    await SomethingDbInterface.upsertSomething(somethingEntity);
-  };
+  static createController = (somethingEntity: SomethingEntity): Promise<void> =>
+    SomethingDbInterface.upsertSomething(somethingEntity);
 }
