@@ -83,3 +83,17 @@ This is ideally a very simple layer that provides an actual interface into our d
 
 - [Clean API Architecture, The pattern you need — or probably had but didn’t realize, by Eric Silverberg](https://medium.com/perry-street-software-engineering/clean-api-architecture-2b57074084d5)
 - [node.js-clean-architecture, A use case of Clean Architecture in Node.js comprising of Express.js, MongoDB and Redis as the main (but replaceable) infrastructure.](https://github.com/panagiop/node.js-clean-architecture)
+
+## Notes
+
+Before you run this app, make sure mongod is running:
+- from a terminal, run `~ % mongod --dbpath ~/srv/mongodb/`
+- from MongoDB Compass, connect to `localhost:27017`
+- in MongoDB, create a new database and collection called both `something`
+- make sure the api client is including the `api-key` header
+- example GET request
+
+```curl
+curl --location 'localhost:3000/v1/get-something/6777ece700ccedd69ec6faa8' \
+--header 'api-key: test'
+```
